@@ -18,7 +18,7 @@ class ProductList extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props);
+    // console.log(this.props);
     // this.getCategory();
     let { category } = this.props.params;
     this.setState({ selectedCategory: category });
@@ -28,14 +28,6 @@ class ProductList extends Component {
     // console.log(this.state.selectedCategory);
     this.render();
   }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextProps.params !== this.props.params) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   getCategoryQuery = gql`
     query categories($name: String!) {
@@ -79,11 +71,13 @@ class ProductList extends Component {
                 </h1>
                 <div className={classes.product_div}>
                   {data.category.products.map((product) => (
-                    <div key={product.name} className={classes.product}>
-                      <img src={product.gallery[0]} alt="" />
-                      <p>{product.name}</p>
-                      <h5>${product.prices[0].amount}</h5>
-                    </div>
+                    <a href={`/product/${product.id}`} key={product.name}>
+                      <div className={classes.product}>
+                        <img src={product.gallery[0]} alt="" />
+                        <p>{product.name}</p>
+                        <h5>${product.prices[0].amount}</h5>
+                      </div>
+                    </a>
                   ))}
                 </div>
               </>

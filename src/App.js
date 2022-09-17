@@ -4,6 +4,7 @@ import { Component } from "react";
 import NavBar from "./components/NavBar";
 import ProductList from "./pages/ProductList";
 import { Routes, Route } from "react-router-dom";
+import ProductDetail from "./pages/ProductDetail";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
@@ -19,6 +20,10 @@ class App extends Component {
           <Route
             path="/category/:category"
             element={<ProductList client={client} />}
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductDetail client={client} />}
           />
         </Routes>
       </ApolloProvider>

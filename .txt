@@ -29,3 +29,19 @@
   //       console.log(result);
   //     });
   // };
+
+  //   getProduct = () => {
+  //     this.props.client
+  //       .query({
+  //         query: gql`
+  //        {
+  //         product(){
+  //             name
+  //         }
+  //        }
+  //         `,
+  //       })
+  //       .then((result) => {
+  //         console.log(result);
+  //       });
+  //   };

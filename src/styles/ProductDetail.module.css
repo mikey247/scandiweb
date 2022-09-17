@@ -1,0 +1,40 @@
+.product {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+
+.images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10rem;
+  /* display: flex; */
+}
+
+.gallery img {
+  display: block;
+  width: 5rem;
+  margin-bottom: 50px;
+}
+
+.main_image img {
+  width: 38rem;
+}
+
+.product_details {
+}
+.product_details h1 {
+  font-weight: 300;
+}
+
+.product_details button {
+  background-color: #5ece7b;
+  border: none;
+  color: white;
+
+  width: 18rem;
+  height: 3.25rem;
+  font-size: 20px;
+  font-family: "Raleway", sans-serif;
+}

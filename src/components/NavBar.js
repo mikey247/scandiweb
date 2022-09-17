@@ -5,7 +5,7 @@ import { Query } from "@apollo/client/react/components";
 
 import logo from "../images/svg 3.png";
 import { BsCart } from "react-icons/bs";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const getCurrencyQuery = gql`
   {
@@ -29,7 +29,9 @@ class NavBar extends Component {
         </div>
 
         <div>
-          <img src={logo} alt="" />
+          <a href="/category/all">
+            <img src={logo} alt="" />
+          </a>
         </div>
 
         <div className={classes.cart}>

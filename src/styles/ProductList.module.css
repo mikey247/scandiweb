@@ -1,12 +1,17 @@
 .product_div {
+  margin-top: 6rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
+
+.product_div a {
+  text-decoration: none;
+  color: black;
+}
 .product {
   width: 24.12rem;
   height: 27.75rem;
-  /* border: 2px solid red; */
 }
 
 .product img {
