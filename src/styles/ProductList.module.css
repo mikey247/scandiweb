@@ -1,0 +1,16 @@
+.product_div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.product {
+  width: 24.12rem;
+  height: 27.75rem;
+  /* border: 2px solid red; */
+}
+
+.product img {
+  width: 22rem;
+  height: 21.125rem;
+  object-fit: cover;
+}

@@ -1,0 +1,33 @@
+.nav {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.links_list {
+  padding: 20px 0;
+  display: flex;
+  width: 15rem;
+  justify-content: space-between;
+}
+
+.links_list a {
+  text-decoration: none;
+  color: black;
+  margin-right: 20px;
+}
+
+.links_list a:active {
+  color: aqua;
+}
+
+.cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart div {
+  margin-right: 30px;
+}

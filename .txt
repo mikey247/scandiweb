@@ -1,0 +1,31 @@
+// getCategory = () => {
+  //   this.props.client
+  //     .query({
+  //       query: gql`
+  //         {
+  //           category(input: { title: "${this.state.selectedCategory}" }) {
+  //             name
+  //             products {
+  //               id
+  //               name
+  //               inStock
+  //               gallery
+  //               description
+  //               category
+  //               attributes {
+  //                 name
+  //               }
+  //               prices {
+  //                 amount
+  //               }
+  //               brand
+  //             }
+  //           }
+  //         }
+  //       `,
+  //     })
+  //     .then((result) => {
+  //       console.log(this.state.selectedCategory);
+  //       console.log(result);
+  //     });
+  // };
