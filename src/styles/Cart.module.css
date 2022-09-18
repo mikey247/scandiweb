@@ -1,0 +1,63 @@
+.cart_heading {
+  margin-bottom: 20px;
+}
+
+.cart_top_section {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.name {
+  font-weight: 400;
+}
+
+.cart_top_section_right {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.cart_top_section_right img {
+  width: 15rem;
+}
+.item_amount p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+.item_amount button {
+  width: 2.8125rem;
+  height: 2.8125rem;
+  font-size: 2rem;
+  background-color: transparent;
+  border: 1px solid black;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+}
+.add {
+  margin-bottom: 5rem;
+}
+.subtract {
+  margin-top: 5rem;
+}
+
+.cart_bottom_section {
+  margin-top: 20px;
+  padding: 40px 0;
+}
+
+.cart_bottom_section h3 {
+  font-weight: 400;
+}
+
+.cart_bottom_section button {
+  background-color: #5ece7b;
+  border: none;
+  color: white;
+
+  width: 18rem;
+  height: 2.6875rem;
+  font-size: 20px;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+}

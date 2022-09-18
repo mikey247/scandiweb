@@ -3,8 +3,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Component } from "react";
 import NavBar from "./components/NavBar";
 import ProductList from "./pages/ProductList";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
@@ -25,6 +26,9 @@ class App extends Component {
             path="/product/:id"
             element={<ProductDetail client={client} />}
           />
+
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Navigate to="/category/all" replace />} />
         </Routes>
       </ApolloProvider>
     );

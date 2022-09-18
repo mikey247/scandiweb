@@ -8,8 +8,7 @@
 .images {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10rem;
-  /* display: flex; */
+  gap: 5rem;
 }
 
 .gallery img {
@@ -23,6 +22,7 @@
 }
 
 .product_details {
+  padding: 1rem;
 }
 .product_details h1 {
   font-weight: 300;
@@ -37,4 +37,5 @@
   height: 3.25rem;
   font-size: 20px;
   font-family: "Raleway", sans-serif;
+  cursor: pointer;
 }

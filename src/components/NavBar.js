@@ -5,7 +5,10 @@ import { Query } from "@apollo/client/react/components";
 
 import logo from "../images/svg 3.png";
 import { BsCart } from "react-icons/bs";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { connect } from "react-redux";
+import { currencyActions } from "../redux/currencyRedux";
 
 const getCurrencyQuery = gql`
   {
@@ -41,7 +44,16 @@ class NavBar extends Component {
                 if (loading) return <p>Loading…</p>;
                 if (error) return <p>Error :(</p>;
                 return (
-                  <select>
+                  <select
+                    value={this.props.currency || "USD"}
+                    onClick={() => {
+                      // console.log(this.props);
+                    }}
+                    onChange={(e) => {
+                      this.props.changeCurrency({ value: e.target.value });
+                      // console.log(e);
+                    }}
+                  >
                     {data.currencies.map(({ label, symbol }) => (
                       <option value={label} key={symbol}>
                         {symbol} {label}
@@ -52,11 +64,22 @@ class NavBar extends Component {
               }}
             </Query>
           </div>
-          <BsCart size={"1.5rem"} />
+          <Link to="/cart" className={classes.cartIcon}>
+            <BsCart size={"1.5rem"} /> <p>{this.props.quantity}</p>
+          </Link>
         </div>
       </nav>
     );
   }
 }
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+  currency: state.currency.value,
+  quantity: state.cart.quantity,
+});
+
+const mapDispatchToProps = {
+  changeCurrency: currencyActions.addCurrency,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

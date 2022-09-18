@@ -4,6 +4,7 @@ import { Query } from "@apollo/client/react/components";
 import classes from "../styles/ProductList.module.css";
 
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -45,6 +46,10 @@ class ProductList extends Component {
           }
           prices {
             amount
+            currency {
+              symbol
+              label
+            }
           }
           brand
         }
@@ -75,7 +80,23 @@ class ProductList extends Component {
                       <div className={classes.product}>
                         <img src={product.gallery[0]} alt="" />
                         <p>{product.name}</p>
-                        <h5>${product.prices[0].amount}</h5>
+                        <h5>
+                          {" "}
+                          {
+                            product.prices.find(
+                              (item) =>
+                                item.currency.label ===
+                                (this.props.currency || "USD")
+                            ).currency.symbol
+                          }
+                          {
+                            product.prices.find(
+                              (item) =>
+                                item.currency.label ===
+                                (this.props.currency || "USD")
+                            ).amount
+                          }
+                        </h5>
                       </div>
                     </a>
                   ))}
@@ -89,4 +110,8 @@ class ProductList extends Component {
   }
 }
 
-export default withParams(ProductList);
+const mapStateToProps = (state) => ({
+  currency: state.currency.value,
+});
+
+export default connect(mapStateToProps)(withParams(ProductList));
