@@ -81,12 +81,12 @@ class Cart extends Component {
           <h3>
             Total:
             {this.props.cart.length < 1
-              ? "$"
+              ? ""
               : this.props.cart[0].prices.find(
                   (item) =>
                     item.currency.label === (this.props.currency || "USD")
                 ).currency.symbol}
-            {this.props.total || 0}
+            {this.props.total < 1 ? "0" : this.props.total}
           </h3>
           <button type="">Order</button>
         </div>

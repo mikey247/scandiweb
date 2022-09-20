@@ -46,3 +46,97 @@
   background-color: black;
   color: white;
 }
+
+.none {
+  display: none;
+}
+.overlay_background {
+  position: fixed; /* Sit on top of the page content */
+  /* display: none; */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+.overlay {
+  /* border: 2px solid red; */
+  width: 20.3125rem;
+  padding: 32px 16px;
+
+  z-index: 3;
+  background-color: white;
+  position: absolute;
+  right: 0;
+  top: 3rem;
+}
+
+.product_section {
+  margin-top: 30px;
+  display: flex;
+}
+
+.product_right_section {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 10px;
+}
+.product_right_section img {
+  width: 8rem;
+  /* object-fit: cover; */
+}
+.item_amount p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+.item_amount button {
+  width: 1.8125rem;
+  height: 1.8125rem;
+  font-size: 1.3rem;
+  background-color: transparent;
+  border: 1px solid black;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+}
+.add {
+  margin-bottom: 5rem;
+}
+.subtract {
+  margin-top: 5rem;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.view_button {
+  width: 8.75rem;
+  height: 2.6875rem;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.view_button a {
+  text-decoration: none;
+  color: black;
+}
+
+.checkout_button {
+  width: 8.75rem;
+  height: 2.6875rem;
+  background-color: #5ece7b;
+  border: none;
+  color: white;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+}
