@@ -5,6 +5,7 @@ import classes from "../styles/ProductList.module.css";
 
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { cartActions } from "../redux/cartRedux";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -19,7 +20,7 @@ class ProductList extends Component {
   }
 
   componentDidMount = () => {
-    // console.log(this.props);
+    console.log(this.props);
     // this.getCategory();
     let { category } = this.props.params;
     this.setState({ selectedCategory: category });
@@ -101,6 +102,73 @@ class ProductList extends Component {
                     </a>
                   ))}
                 </div>
+
+                <>
+                  <div className={classes.overlay}>
+                    <h3>
+                      My Bag, {this.props.quantity}-
+                      {this.props.quantity < 2 ? "item" : "items"}
+                    </h3>
+                    {this.props.cart.map((product) => (
+                      <div key={product.id} className={classes.product_section}>
+                        <div>
+                          <h3>{product.brand}</h3>
+                          <h3> {product.name}</h3>
+                          <h3>
+                            {
+                              product.prices.find(
+                                (item) =>
+                                  item.currency.label ===
+                                  (this.props.currency || "USD")
+                              ).currency.symbol
+                            }
+                            {product.price}
+                          </h3>
+                        </div>
+
+                        <div className={classes.product_right_section}>
+                          <div className={classes.item_amount}>
+                            <button
+                              type=""
+                              className={classes.add}
+                              onClick={() =>
+                                this.props.add({ ...product, quantity: 1 })
+                              }
+                            >
+                              +
+                            </button>
+                            <p>{product.quantity}</p>
+                            <button
+                              type=""
+                              className={classes.subtract}
+                              onClick={() =>
+                                this.props.remove({
+                                  id: product.id,
+                                })
+                              }
+                            >
+                              -
+                            </button>
+                          </div>
+
+                          <img src={product.gallery[0]} alt="" />
+                        </div>
+                      </div>
+                    ))}
+
+                    <h2>
+                      {" "}
+                      Total:{" "}
+                      {this.props.cart[0] &&
+                        this.props.cart[0].prices.find(
+                          (item) =>
+                            item.currency.label ===
+                            (this.props.currency || "USD")
+                        ).currency.symbol}
+                      {this.props.total}
+                    </h2>
+                  </div>
+                </>
               </>
             );
           }}
@@ -112,6 +180,17 @@ class ProductList extends Component {
 
 const mapStateToProps = (state) => ({
   currency: state.currency.value,
+  cart: state.cart.products,
+  total: state.cart.totalAmount,
+  quantity: state.cart.quantity,
 });
 
-export default connect(mapStateToProps)(withParams(ProductList));
+const mapDispatchToProps = {
+  add: cartActions.addToCart,
+  remove: cartActions.removeFromCart,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withParams(ProductList));

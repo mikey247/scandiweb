@@ -20,6 +20,26 @@ const getCurrencyQuery = gql`
 `;
 
 class NavBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      currency: "",
+      symbol: "",
+    };
+  }
+
+  currencyHandler = (e) => {
+    console.log(this.props);
+    // this.setState({
+    //   currency: e.target.value.split(" ")[0],
+    //   symbol: e.target.value.split(" ")[1],
+    // });
+    this.props.changeCurrency({
+      value: e.target.value, //this.state.currency,
+      // symbol: this.state.symbol,
+    });
+  };
+
   render() {
     return (
       <nav className={classes.nav}>
@@ -46,13 +66,7 @@ class NavBar extends Component {
                 return (
                   <select
                     value={this.props.currency || "USD"}
-                    onClick={() => {
-                      // console.log(this.props);
-                    }}
-                    onChange={(e) => {
-                      this.props.changeCurrency({ value: e.target.value });
-                      // console.log(e);
-                    }}
+                    onChange={this.currencyHandler.bind(this)}
                   >
                     {data.currencies.map(({ label, symbol }) => (
                       <option value={label} key={symbol}>

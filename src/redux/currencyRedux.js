@@ -4,13 +4,14 @@ const currencySlice = createSlice({
   name: "currency",
 
   initialState: {
-    value: localStorage.getItem("currency"),
+    value: "",
+    symbol: "",
   },
 
   reducers: {
     addCurrency: (state, action) => {
       state.value = action.payload.value;
-      localStorage.setItem("currency", action.payload.value);
+      state.symbol = action.payload.symbol;
     },
   },
 });

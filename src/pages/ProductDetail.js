@@ -155,7 +155,7 @@ class ProductDetail extends Component {
 
 const mapStateToProps = (state) => ({
   cart: state.cart.products,
-  total: state.cart.total,
+  total: state.cart.totalAmount,
   quantity: state.cart.quantity,
   currency: state.currency.value,
 });
