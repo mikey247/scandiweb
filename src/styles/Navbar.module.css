@@ -55,7 +55,7 @@
   /* display: none; */
   width: 100%; /* Full width (cover the whole page) */
   height: 100%; /* Full height (cover the whole page) */
-  top: 0;
+  top: 5rem;
   left: 0;
   right: 0;
   bottom: 0;
@@ -66,14 +66,15 @@
 
 .overlay {
   /* border: 2px solid red; */
-  width: 20.3125rem;
+  width: 21.3125rem;
+  /* width: 1440px; */
   padding: 32px 16px;
 
   z-index: 3;
   background-color: white;
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 3rem;
+  top: 5rem;
 }
 
 .product_section {
@@ -81,14 +82,27 @@
   display: flex;
 }
 
+.product_section h3 {
+  margin: 0;
+  margin-bottom: 10px;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.product_left_section {
+  width: 70px;
+  /* border: 2px solid red; */
+}
+
 .product_right_section {
   display: flex;
-  /* justify-content: space-between; */
-  gap: 10px;
+  /* border: 2px solid forestgreen; */
 }
 .product_right_section img {
-  width: 8rem;
-  /* object-fit: cover; */
+  width: 7.5rem;
+  height: 11.8rem;
+  object-fit: contain;
 }
 .item_amount p {
   font-size: 1.2rem;
@@ -104,10 +118,10 @@
   cursor: pointer;
 }
 .add {
-  margin-bottom: 5rem;
+  margin-bottom: 2.3rem;
 }
 .subtract {
-  margin-top: 5rem;
+  margin-top: 2.3rem;
 }
 
 .buttons {
@@ -116,7 +130,7 @@
   justify-content: space-between;
 }
 
-.view_button {
+.view_button button {
   width: 8.75rem;
   height: 2.6875rem;
   background-color: white;
@@ -126,6 +140,7 @@
 .view_button a {
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .checkout_button {

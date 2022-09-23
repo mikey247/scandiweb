@@ -5,7 +5,6 @@ import { Query } from "@apollo/client/react/components";
 
 import logo from "../images/svg 3.png";
 import { BsCart } from "react-icons/bs";
-import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { currencyActions } from "../redux/currencyRedux";
@@ -34,6 +33,7 @@ class NavBar extends Component {
     this.setState((currentState) => {
       return { overlay: !currentState.overlay };
     });
+    // this.props.reset();
   };
 
   currencyHandler = (e) => {
@@ -47,6 +47,13 @@ class NavBar extends Component {
       // symbol: this.state.symbol,
     });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currency !== this.props.currency) {
+      // Do something here
+      this.props.adjust({ currency: this.props.currency });
+    }
+  }
 
   render() {
     return (
@@ -86,13 +93,12 @@ class NavBar extends Component {
               }}
             </Query>
           </div>
-          <Link
-            to=""
+          <span
             className={classes.cartIcon}
             onClick={this.overlayHandler.bind(this)}
           >
             <BsCart size={"1.5rem"} /> <p>{this.props.quantity}</p>
-          </Link>
+          </span>
 
           <div
             className={
@@ -105,7 +111,7 @@ class NavBar extends Component {
             </h3>
             {this.props.cart.map((product) => (
               <div key={product.id} className={classes.product_section}>
-                <div>
+                <div className={classes.product_left_section}>
                   <h3>{product.brand}</h3>
                   <h3> {product.name}</h3>
                   <h3>
@@ -158,14 +164,14 @@ class NavBar extends Component {
                     (item) =>
                       item.currency.label === (this.props.currency || "USD")
                   ).currency.symbol}
-                {this.props.total < 1 ? "0" : this.props.total}
+                {this.props.total}
               </h4>
             </div>
 
             <div className={classes.buttons}>
-              <button className={classes.view_button}>
-                <a href="/cart">VIEW BAG</a>
-              </button>
+              <a href="/cart" className={classes.view_button}>
+                <button>VIEW BAG</button>
+              </a>
               <button className={classes.checkout_button}>CHECKOUT</button>
             </div>
           </div>
@@ -195,6 +201,8 @@ const mapDispatchToProps = {
   changeCurrency: currencyActions.addCurrency,
   add: cartActions.addToCart,
   remove: cartActions.removeFromCart,
+  reset: cartActions.resetTotal,
+  adjust: cartActions.adjustTotal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

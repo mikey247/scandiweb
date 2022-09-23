@@ -39,3 +39,23 @@
   font-family: "Raleway", sans-serif;
   cursor: pointer;
 }
+
+.attribute_values {
+  display: flex;
+  gap: 10px;
+}
+
+.attribute_text {
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.selectedColor {
+  border: 2px solid #5ece7b;
+}
+
+.selectedAttribute {
+  background-color: black;
+  color: white;
+}

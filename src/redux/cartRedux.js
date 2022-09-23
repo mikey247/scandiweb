@@ -41,6 +41,32 @@ const cartSlice = createSlice({
         existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
       }
     },
+    adjustTotal: (state, action) => {
+      console.log(action.payload.currency);
+      // changing the price of cart items according to currencty change
+      state.totalAmount = 0;
+
+      for (let i = 0; i < state.products.length; i++) {
+        state.products[i].price = state.products[i].prices.find(
+          (item) => item.currency.label === action.payload.currency
+        ).amount;
+
+        console.log(
+          state.products[i].price,
+          state.products[i].prices.find(
+            (item) => item.currency.label === action.payload.currency
+          ).amount,
+          state.products[i].quantity
+        );
+
+        state.totalAmount +=
+          state.products[i].price * state.products[i].quantity;
+      }
+    },
+
+    resetTotal: (state, action) => {
+      state.totalAmount = 0;
+    },
   },
 });
 

@@ -5,6 +5,14 @@ import classes from "../styles/Cart.module.css";
 
 import { connect } from "react-redux";
 import { cartActions } from "../redux/cartRedux";
+import styled from "styled-components";
+
+const AttributeColor = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
+`;
 
 class Cart extends Component {
   constructor() {
@@ -15,6 +23,20 @@ class Cart extends Component {
   componentDidMount() {
     console.log(this.props);
   }
+
+  attributeHandler = (attribute) => {
+    // console.log(attribute);
+    // if (attribute.name === "Color") {
+    //   this.setState({ color: attribute.value });
+    // }
+    // if (attribute.name === "Capacity") {
+    //   this.setState({ capacity: attribute.value });
+    // }
+    // if (attribute.name === "Size") {
+    //   this.setState({ size: attribute.value });
+    // }
+    // console.log(this.state);
+  };
 
   render() {
     return (
@@ -42,9 +64,57 @@ class Cart extends Component {
                 }
               </h2>
 
-              <h4>SIZE:</h4>
+              {product.attributes.map((attribute) => (
+                <div key={attribute.id}>
+                  <h2>{attribute.name}:</h2>
 
-              <h4>COLOR:</h4>
+                  <div className={classes.attribute_values}>
+                    {attribute.items.map((item) => (
+                      <div key={item.id}>
+                        {attribute.type === "swatch" ? (
+                          <div
+                            className={
+                              Object.values(this.state).includes(
+                                `${item.displayValue}`
+                              )
+                                ? `${classes.selectedColor}`
+                                : ""
+                            }
+                          >
+                            <AttributeColor
+                              color={item.value}
+                              onClick={() => {
+                                this.attributeHandler({
+                                  name: attribute.name,
+                                  value: item.displayValue,
+                                });
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className={`${classes.attribute_text} ${
+                              Object.values(this.state).includes(
+                                item.displayValue
+                              )
+                                ? `${classes.selectedAttribute}`
+                                : ""
+                            }`}
+                            onClick={() => {
+                              this.attributeHandler({
+                                name: attribute.name,
+                                value: item.value,
+                              });
+                            }}
+                          >
+                            {item.value}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className={classes.cart_top_section_right}>
@@ -86,7 +156,7 @@ class Cart extends Component {
                   (item) =>
                     item.currency.label === (this.props.currency || "USD")
                 ).currency.symbol}
-            {this.props.total < 1 ? "0" : this.props.total}
+            {this.props.total}
           </h3>
           <button type="">Order</button>
         </div>

@@ -26,9 +26,11 @@ class ProductList extends Component {
     this.setState({ selectedCategory: category });
   };
 
-  componentDidUpdate() {
-    // console.log(this.state.selectedCategory);
-    this.render();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.params.category !== this.props.params.category) {
+      // Do something here
+      this.render();
+    }
   }
 
   getCategoryQuery = gql`

@@ -2,6 +2,7 @@ import { Component } from "react";
 import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import classes from "../styles/ProductDetail.module.css";
+import styled from "styled-components";
 
 import { useParams } from "react-router-dom";
 
@@ -11,16 +12,49 @@ import { cartActions } from "../redux/cartRedux";
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
+const AttributeColor = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
+`;
 
 class ProductDetail extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      color: "",
+      size: "",
+      capacity: "",
+    };
   }
 
   componentDidMount() {
     this.getProduct();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      // Do something here
+      console.log(this.state);
+    }
+  }
+
+  attributeHandler = (attribute) => {
+    // console.log(attribute);
+    if (attribute.name === "Color") {
+      this.setState({ color: attribute.value });
+    }
+
+    if (attribute.name === "Capacity") {
+      this.setState({ capacity: attribute.value });
+    }
+    if (attribute.name === "Size") {
+      this.setState({ size: attribute.value });
+    }
+
+    // console.log(this.state);
+  };
 
   getProductQuery = gql`
     query product($id: String!) {
@@ -34,6 +68,13 @@ class ProductDetail extends Component {
         category
         attributes {
           name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+          id
         }
         prices {
           currency {
@@ -62,6 +103,13 @@ class ProductDetail extends Component {
               category
               attributes {
                 name
+                type
+                items {
+                  displayValue
+                  value
+                  id
+                }
+                id
               }
               prices {
                 currency {
@@ -76,7 +124,7 @@ class ProductDetail extends Component {
         `,
       })
       .then((result) => {
-        // console.log(result);
+        console.log(result.data.product);
         // console.log(this.props.params.id);
       });
   };
@@ -107,6 +155,66 @@ class ProductDetail extends Component {
               <div className={classes.product_details}>
                 <h1>{data.product.brand}</h1>
                 <h1>{data.product.name}</h1>
+
+                <div>
+                  <div>
+                    {/* {data.product.attributes.map((item) => {
+                      console.log(item);
+                    })} */}
+                    {data.product.attributes.map((attribute) => (
+                      <div key={attribute.id}>
+                        <h2>{attribute.name}:</h2>
+
+                        <div className={classes.attribute_values}>
+                          {attribute.items.map((item) => (
+                            <div key={item.id}>
+                              {attribute.type === "swatch" ? (
+                                <div
+                                  className={
+                                    Object.values(this.state).includes(
+                                      `${item.displayValue}`
+                                    )
+                                      ? `${classes.selectedColor}`
+                                      : ""
+                                  }
+                                >
+                                  <AttributeColor
+                                    color={item.value}
+                                    onClick={() => {
+                                      this.attributeHandler({
+                                        name: attribute.name,
+                                        value: item.displayValue,
+                                      });
+                                    }}
+                                  />
+                                </div>
+                              ) : (
+                                <div
+                                  className={`${classes.attribute_text} ${
+                                    Object.values(this.state).includes(
+                                      item.displayValue
+                                    )
+                                      ? `${classes.selectedAttribute}`
+                                      : ""
+                                  }`}
+                                  onClick={() => {
+                                    this.attributeHandler({
+                                      name: attribute.name,
+                                      value: item.value,
+                                    });
+                                  }}
+                                >
+                                  {item.value}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <h3>PRICE:</h3>
 
@@ -131,6 +239,7 @@ class ProductDetail extends Component {
                     console.log(this.props);
                     this.props.add({
                       ...data.product,
+                      ...this.state,
                       quantity: 1,
                       price: data.product.prices.find(
                         (item) => item.currency.label === this.props.currency
@@ -141,9 +250,9 @@ class ProductDetail extends Component {
                   Add to Cart
                 </button>
 
-                <p
+                <div
                   dangerouslySetInnerHTML={{ __html: data.product.description }}
-                ></p>
+                ></div>
               </div>
             </div>
           );
