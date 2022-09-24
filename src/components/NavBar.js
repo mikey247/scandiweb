@@ -9,6 +9,7 @@ import { BsCart } from "react-icons/bs";
 import { connect } from "react-redux";
 import { currencyActions } from "../redux/currencyRedux";
 import { cartActions } from "../redux/cartRedux";
+import styled from "styled-components";
 
 const getCurrencyQuery = gql`
   {
@@ -17,6 +18,13 @@ const getCurrencyQuery = gql`
       symbol
     }
   }
+`;
+
+const AttributeColor = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
 `;
 
 class NavBar extends Component {
@@ -34,6 +42,20 @@ class NavBar extends Component {
       return { overlay: !currentState.overlay };
     });
     // this.props.reset();
+  };
+
+  attributeHandler = (attribute) => {
+    // console.log(attribute);
+    // if (attribute.name === "Color") {
+    //   this.setState({ color: attribute.value });
+    // }
+    // if (attribute.name === "Capacity") {
+    //   this.setState({ capacity: attribute.value });
+    // }
+    // if (attribute.name === "Size") {
+    //   this.setState({ size: attribute.value });
+    // }
+    // console.log(this.state);
   };
 
   currencyHandler = (e) => {
@@ -123,6 +145,57 @@ class NavBar extends Component {
                     }
                     {product.price}
                   </h3>
+
+                  {product.attributes.map((attribute) => (
+                    <div key={attribute.id}>
+                      <h5>{attribute.name}:</h5>
+
+                      <div className={classes.attribute_values}>
+                        {attribute.items.map((item) => (
+                          <div key={item.id}>
+                            {attribute.type === "swatch" ? (
+                              <div
+                                className={
+                                  product.color === item.displayValue
+                                    ? `${classes.selectedColor}`
+                                    : ""
+                                }
+                              >
+                                <AttributeColor
+                                  color={item.value}
+                                  onClick={() => {
+                                    this.attributeHandler({
+                                      name: attribute.name,
+                                      value: item.displayValue,
+                                    });
+                                  }}
+                                />
+                              </div>
+                            ) : (
+                              <div
+                                className={`${classes.attribute_text}
+                              ${
+                                product.size === item.displayValue ||
+                                product.capacity === item.displayValue
+                                  ? `${classes.selectedColor}`
+                                  : ""
+                              }
+                            }`}
+                                onClick={() => {
+                                  this.attributeHandler({
+                                    name: attribute.name,
+                                    value: item.value,
+                                  });
+                                }}
+                              >
+                                {item.value}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className={classes.product_right_section}>

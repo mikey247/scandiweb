@@ -21,8 +21,20 @@ const cartSlice = createSlice({
         state.quantity++;
       } else {
         existingItem.quantity = existingItem.quantity + action.payload.quantity;
+
+        if (newItem.color) {
+          existingItem.color = action.payload.color;
+        }
+
+        if (newItem.size) {
+          existingItem.size = action.payload.size;
+        }
+
+        if (newItem.capacity) {
+          existingItem.capacity = action.payload.capacity;
+        }
       }
-      state.totalAmount += action.payload.price * action.payload.quantity; //quantity of products being added, not cart quantity
+      state.totalAmount += action.payload.price * action.payload.quantity;
 
       // console.log(state.products);
     },

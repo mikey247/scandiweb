@@ -25,7 +25,7 @@
 }
 
 .cart div {
-  margin-right: 30px;
+  /* margin-right: 30px; */
 }
 
 .cart a {
@@ -92,6 +92,7 @@
 
 .product_left_section {
   width: 70px;
+  margin-right: 100px;
   /* border: 2px solid red; */
 }
 
@@ -154,4 +155,24 @@
 .total {
   display: flex;
   justify-content: space-between;
+}
+
+.attribute_values {
+  display: flex;
+  gap: 5px;
+}
+
+.attribute_text {
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.selectedColor {
+  border: 2px solid #5ece7b;
+}
+
+.selectedAttribute {
+  background-color: black;
+  color: white;
 }

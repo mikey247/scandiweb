@@ -74,9 +74,7 @@ class Cart extends Component {
                         {attribute.type === "swatch" ? (
                           <div
                             className={
-                              Object.values(this.state).includes(
-                                `${item.displayValue}`
-                              )
+                              product.color === item.displayValue
                                 ? `${classes.selectedColor}`
                                 : ""
                             }
@@ -93,12 +91,13 @@ class Cart extends Component {
                           </div>
                         ) : (
                           <div
-                            className={`${classes.attribute_text} ${
-                              Object.values(this.state).includes(
-                                item.displayValue
-                              )
-                                ? `${classes.selectedAttribute}`
-                                : ""
+                            className={`${classes.attribute_text}
+                              ${
+                                product.size === item.displayValue ||
+                                product.capacity === item.displayValue
+                                  ? `${classes.selectedColor}`
+                                  : ""
+                              }
                             }`}
                             onClick={() => {
                               this.attributeHandler({
