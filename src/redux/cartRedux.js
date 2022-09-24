@@ -50,7 +50,7 @@ const cartSlice = createSlice({
         state.quantity--;
       } else {
         existingItem.quantity--;
-        existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
+        // existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
       }
     },
     adjustTotal: (state, action) => {
@@ -73,6 +73,24 @@ const cartSlice = createSlice({
 
         state.totalAmount +=
           state.products[i].price * state.products[i].quantity;
+      }
+    },
+
+    adjustAttributes: (state, action) => {
+      const existingItem = state.products.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (action.payload.name === "Color") {
+        existingItem.color = action.payload.value;
+      }
+
+      if (action.payload.name === "Capacity") {
+        existingItem.capacity = action.payload.value;
+      }
+
+      if (action.payload.name === "Size") {
+        existingItem.size = action.payload.value;
       }
     },
 

@@ -24,20 +24,6 @@ class Cart extends Component {
     console.log(this.props);
   }
 
-  attributeHandler = (attribute) => {
-    // console.log(attribute);
-    // if (attribute.name === "Color") {
-    //   this.setState({ color: attribute.value });
-    // }
-    // if (attribute.name === "Capacity") {
-    //   this.setState({ capacity: attribute.value });
-    // }
-    // if (attribute.name === "Size") {
-    //   this.setState({ size: attribute.value });
-    // }
-    // console.log(this.state);
-  };
-
   render() {
     return (
       <>
@@ -82,9 +68,10 @@ class Cart extends Component {
                             <AttributeColor
                               color={item.value}
                               onClick={() => {
-                                this.attributeHandler({
+                                this.props.adjustAttributes({
                                   name: attribute.name,
                                   value: item.displayValue,
+                                  id: product.id,
                                 });
                               }}
                             />
@@ -93,16 +80,17 @@ class Cart extends Component {
                           <div
                             className={`${classes.attribute_text}
                               ${
-                                product.size === item.displayValue ||
-                                product.capacity === item.displayValue
-                                  ? `${classes.selectedColor}`
+                                product.size === item.value ||
+                                product.capacity === item.value
+                                  ? `${classes.selectedAttribute}`
                                   : ""
                               }
                             }`}
                             onClick={() => {
-                              this.attributeHandler({
+                              this.props.adjustAttributes({
                                 name: attribute.name,
                                 value: item.value,
+                                id: product.id,
                               });
                             }}
                           >
@@ -173,6 +161,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   add: cartActions.addToCart,
   remove: cartActions.removeFromCart,
+  adjustAttributes: cartActions.adjustAttributes,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

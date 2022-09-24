@@ -192,7 +192,7 @@ class ProductDetail extends Component {
                                 <div
                                   className={`${classes.attribute_text} ${
                                     Object.values(this.state).includes(
-                                      item.displayValue
+                                      item.value
                                     )
                                       ? `${classes.selectedAttribute}`
                                       : ""

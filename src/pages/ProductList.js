@@ -16,8 +16,15 @@ class ProductList extends Component {
     super();
     this.state = {
       selectedCategory: "",
+      quickShop: false,
     };
   }
+
+  handleQuickShop = () => {
+    this.setState((currentState) => {
+      return { quickShop: !currentState.quickShop };
+    });
+  };
 
   componentDidMount = () => {
     console.log(this.props);
@@ -27,9 +34,8 @@ class ProductList extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.params.category !== this.props.params.category) {
-      // Do something here
-      this.render();
+    if (prevState !== this.state) {
+      console.log(this.state);
     }
   }
 
@@ -77,31 +83,40 @@ class ProductList extends Component {
                   {data.category.name[0].toUpperCase() +
                     data.category.name.substring(1)}
                 </h1>
-                <div className={classes.product_div}>
+                <div
+                  className={classes.product_div}
+                  onMouseEnter={this.handleQuickShop}
+                  onMouseLeave={this.handleQuickShop}
+                >
                   {data.category.products.map((product) => (
-                    <a href={`/product/${product.id}`} key={product.name}>
-                      <div className={classes.product}>
+                    <div
+                      className={`${classes.product} ${
+                        this.state.quickShop ? classes.greenBorder : ""
+                      }`}
+                      key={product.name}
+                    >
+                      <a href={`/product/${product.id}`}>
                         <img src={product.gallery[0]} alt="" />
-                        <p>{product.name}</p>
-                        <h5>
-                          {" "}
-                          {
-                            product.prices.find(
-                              (item) =>
-                                item.currency.label ===
-                                (this.props.currency || "USD")
-                            ).currency.symbol
-                          }
-                          {
-                            product.prices.find(
-                              (item) =>
-                                item.currency.label ===
-                                (this.props.currency || "USD")
-                            ).amount
-                          }
-                        </h5>
-                      </div>
-                    </a>
+                      </a>
+                      <p>{product.name}</p>
+                      <h5>
+                        {" "}
+                        {
+                          product.prices.find(
+                            (item) =>
+                              item.currency.label ===
+                              (this.props.currency || "USD")
+                          ).currency.symbol
+                        }
+                        {
+                          product.prices.find(
+                            (item) =>
+                              item.currency.label ===
+                              (this.props.currency || "USD")
+                          ).amount
+                        }
+                      </h5>
+                    </div>
                   ))}
                 </div>
               </>

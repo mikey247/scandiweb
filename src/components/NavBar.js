@@ -44,29 +44,11 @@ class NavBar extends Component {
     // this.props.reset();
   };
 
-  attributeHandler = (attribute) => {
-    // console.log(attribute);
-    // if (attribute.name === "Color") {
-    //   this.setState({ color: attribute.value });
-    // }
-    // if (attribute.name === "Capacity") {
-    //   this.setState({ capacity: attribute.value });
-    // }
-    // if (attribute.name === "Size") {
-    //   this.setState({ size: attribute.value });
-    // }
-    // console.log(this.state);
-  };
-
   currencyHandler = (e) => {
     console.log(this.props);
-    // this.setState({
-    //   currency: e.target.value.split(" ")[0],
-    //   symbol: e.target.value.split(" ")[1],
-    // });
+
     this.props.changeCurrency({
-      value: e.target.value, //this.state.currency,
-      // symbol: this.state.symbol,
+      value: e.target.value,
     });
   };
 
@@ -164,9 +146,10 @@ class NavBar extends Component {
                                 <AttributeColor
                                   color={item.value}
                                   onClick={() => {
-                                    this.attributeHandler({
+                                    this.props.adjustAttributes({
                                       name: attribute.name,
                                       value: item.displayValue,
+                                      id: product.id,
                                     });
                                   }}
                                 />
@@ -175,16 +158,17 @@ class NavBar extends Component {
                               <div
                                 className={`${classes.attribute_text}
                               ${
-                                product.size === item.displayValue ||
-                                product.capacity === item.displayValue
-                                  ? `${classes.selectedColor}`
+                                product.size === item.value ||
+                                product.capacity === item.value
+                                  ? `${classes.selectedAttribute}`
                                   : ""
                               }
                             }`}
                                 onClick={() => {
-                                  this.attributeHandler({
+                                  this.props.adjustAttributes({
                                     name: attribute.name,
                                     value: item.value,
+                                    id: product.id,
                                   });
                                 }}
                               >
@@ -274,8 +258,9 @@ const mapDispatchToProps = {
   changeCurrency: currencyActions.addCurrency,
   add: cartActions.addToCart,
   remove: cartActions.removeFromCart,
-  reset: cartActions.resetTotal,
+  adjustAttributes: cartActions.adjustAttributes,
   adjust: cartActions.adjustTotal,
+  reset: cartActions.resetTotal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
