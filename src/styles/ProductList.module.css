@@ -10,16 +10,40 @@
   color: black;
 }
 .product {
-  width: 24.12rem;
+  width: 22.12rem;
   height: 27.75rem;
+  padding: 1rem;
+  position: relative;
 }
 
 .product img {
   width: 22rem;
   height: 21.125rem;
   object-fit: cover;
+  text-align: center;
+  /* border: 2px solid cyan; */
 }
 
-/* .greenBorder {
-  border: 5px solid green;
-} */
+.border {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+}
+
+.none {
+  /* display: none; */
+}
+
+.visible {
+  display: block;
+  background-color: #5ece7b;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+
+  position: absolute;
+  left: 19rem;
+  bottom: 6rem;
+}

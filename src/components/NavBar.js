@@ -42,6 +42,7 @@ class NavBar extends Component {
       return { overlay: !currentState.overlay };
     });
     // this.props.reset();
+    // this.props.resetCart();
   };
 
   currencyHandler = (e) => {
@@ -113,6 +114,7 @@ class NavBar extends Component {
               My Bag, {this.props.quantity}-
               {this.props.quantity < 2 ? "item" : "items"}
             </h3>
+            {/*  */}
             {this.props.cart.map((product) => (
               <div key={product.id} className={classes.product_section}>
                 <div className={classes.product_left_section}>
@@ -211,6 +213,7 @@ class NavBar extends Component {
                 </div>
               </div>
             ))}
+            {/*  */}
 
             <div className={classes.total}>
               <h4> Total: </h4>
@@ -261,6 +264,7 @@ const mapDispatchToProps = {
   adjustAttributes: cartActions.adjustAttributes,
   adjust: cartActions.adjustTotal,
   reset: cartActions.resetTotal,
+  resetCart: cartActions.resetCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

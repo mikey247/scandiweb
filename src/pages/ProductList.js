@@ -6,6 +6,7 @@ import classes from "../styles/ProductList.module.css";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { cartActions } from "../redux/cartRedux";
+import { BsCart } from "react-icons/bs";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -16,7 +17,7 @@ class ProductList extends Component {
     super();
     this.state = {
       selectedCategory: "",
-      quickShop: false,
+      quickShop: -1,
     };
   }
 
@@ -24,6 +25,14 @@ class ProductList extends Component {
     this.setState((currentState) => {
       return { quickShop: !currentState.quickShop };
     });
+  };
+
+  showQuickShop = (i) => {
+    this.setState({ quickShop: i });
+  };
+
+  hideQuickShop = () => {
+    this.setState({ quickShop: -1 });
   };
 
   componentDidMount = () => {
@@ -44,6 +53,7 @@ class ProductList extends Component {
       category(input: { title: $name }) {
         name
         products {
+          name
           id
           name
           inStock
@@ -52,13 +62,20 @@ class ProductList extends Component {
           category
           attributes {
             name
+            type
+            items {
+              displayValue
+              value
+              id
+            }
+            id
           }
           prices {
-            amount
             currency {
               symbol
               label
             }
+            amount
           }
           brand
         }
@@ -83,39 +100,64 @@ class ProductList extends Component {
                   {data.category.name[0].toUpperCase() +
                     data.category.name.substring(1)}
                 </h1>
-                <div
-                  className={classes.product_div}
-                  onMouseEnter={this.handleQuickShop}
-                  onMouseLeave={this.handleQuickShop}
-                >
-                  {data.category.products.map((product) => (
+                <div className={classes.product_div}>
+                  {data.category.products.map((product, index) => (
                     <div
-                      className={`${classes.product} ${
-                        this.state.quickShop ? classes.greenBorder : ""
-                      }`}
+                      onMouseEnter={() => {
+                        this.showQuickShop(index);
+                      }}
+                      onMouseLeave={this.hideQuickShop}
+                      className={`${classes.product} 
+                      ${this.state.quickShop === index ? classes.border : ""}
+                      `}
                       key={product.name}
                     >
-                      <a href={`/product/${product.id}`}>
-                        <img src={product.gallery[0]} alt="" />
-                      </a>
-                      <p>{product.name}</p>
-                      <h5>
-                        {" "}
-                        {
-                          product.prices.find(
-                            (item) =>
-                              item.currency.label ===
-                              (this.props.currency || "USD")
-                          ).currency.symbol
+                      <div>
+                        <a href={`/product/${product.id}`}>
+                          <img src={product.gallery[0]} alt="" />
+                        </a>
+                        <p>{product.name}</p>
+                        <h5>
+                          {" "}
+                          {
+                            product.prices.find(
+                              (item) =>
+                                item.currency.label ===
+                                (this.props.currency || "USD")
+                            ).currency.symbol
+                          }
+                          {
+                            product.prices.find(
+                              (item) =>
+                                item.currency.label ===
+                                (this.props.currency || "USD")
+                            ).amount
+                          }
+                        </h5>
+                      </div>
+                      <div
+                        className={`
+                        ${
+                          this.state.quickShop === index
+                            ? classes.visible
+                            : classes.none
                         }
-                        {
-                          product.prices.find(
-                            (item) =>
-                              item.currency.label ===
-                              (this.props.currency || "USD")
-                          ).amount
-                        }
-                      </h5>
+                        `}
+                        onClick={() => {
+                          console.log(this.props);
+                          console.log(product);
+                          this.props.add({
+                            ...product,
+                            quantity: 1,
+                            price: product.prices.find(
+                              (item) =>
+                                item.currency.label === this.props.currency
+                            ).amount,
+                          });
+                        }}
+                      >
+                        <BsCart size={"2rem"} color={"white"} />
+                      </div>
                     </div>
                   ))}
                 </div>
